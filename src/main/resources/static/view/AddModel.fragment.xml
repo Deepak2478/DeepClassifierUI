@@ -1,0 +1,28 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<ResponsivePopover title="Add Model" class="sapUiPopupWithPadding" placement="Top">
+		<beginButton>
+			<Button text="Ok" press="handleOkButton"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="handleCloseButton"/>
+		</endButton>
+		<content>
+			<form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4"
+				labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1"
+				singleContainerFullSize="false">
+				<form:content>
+					<Label text="Model Name"/>
+					<Input id="idInputModel" value="{data>/modelName}"/>
+					<Label text="Model Type"/>
+					<Select id="idDataType" forceSelection="false" items="{ path: 'data>/ModelTypes'}">
+						<core:Item key="{data>ID}" text="{data>Type}"/>
+					</Select>
+					<Label text="Status"/>
+					<Select id="idStatusType" forceSelection="false" items="{ path: 'data>/Status'}">
+						<core:Item key="{data>ID}" text="{data>Name}"/>
+					</Select>
+				</form:content>
+			</form:SimpleForm>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

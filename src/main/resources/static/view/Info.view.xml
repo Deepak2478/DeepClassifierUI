@@ -1,0 +1,181 @@
+<core:View xmlns:core="sap.ui.core"
+           xmlns="sap.uxap"
+           xmlns:layout="sap.ui.layout"
+           xmlns:m="sap.m"
+           xmlns:u="sap.ui.unified"
+           controllerName="com.sapML_Analysis.controller.Info"
+           height="100%">
+    <u:Shell
+            id="myShell"
+            icon="http://logok.org/wp-content/uploads/2014/10/SAP-logo-2011.png">
+        <u:headItems>
+            <u:ShellHeadItem
+                    tooltip="Configuration"
+                    icon="sap-icon://nav-back"
+                    press="handlePressConfiguration" />
+            <u:ShellHeadItem
+                    tooltip="Home"
+                    icon="sap-icon://home"
+                    visible="false"
+                    press="handlePressHome" />
+        </u:headItems>
+        <u:headEndItems>
+            <u:ShellHeadItem
+                    icon="sap-icon://log"
+                    tooltip="Logoff"
+                    press="handleLogoffPress" />
+        </u:headEndItems>
+        <!--<u:user>
+            <u:ShellHeadUserItem
+                    image="sap-icon://person-placeholder"
+                    username="Karl Mustermann"
+                    press="handleUserItemPressed" />
+        </u:user>
+        <u:search>
+            <SearchField
+                    search="handleSearchPressed"/>
+        </u:search>
+        <u:paneContent>
+            <Text text="Lorem ipsum" />
+        </u:paneContent>-->
+
+    </u:Shell>
+    <ObjectPageLayout id="ObjectPageLayout"
+                      enableLazyLoading="false"
+                      showTitleInHeaderContent="true"
+                      showEditHeaderButton="false"
+                      editHeaderButtonPress="handleEditBtnPress">
+        <headerTitle>
+            <ObjectPageHeader
+                              objectTitle="Payroll Results Validator"
+
+                              objectSubtitle="Tax Validation"
+
+                              isObjectIconAlwaysVisible="false"
+                              isObjectTitleAlwaysVisible="false"
+                              isObjectSubtitleAlwaysVisible="false">
+            </ObjectPageHeader>
+        </headerTitle>
+
+        <headerContent>
+            <layout:VerticalLayout>
+                <m:Label text="API KEY : 3dy43e2251m21g"/>
+                <m:Label text="X-Payroll-Results-Application:UI5 Client"/>
+            </layout:VerticalLayout>
+
+            <!--<layout:HorizontalLayout>
+                <m:Image src="./test-resources/sap/uxap/images/linkedin.png"></m:Image>
+                <m:Image src="./test-resources/sap/uxap/images/Twitter.png"></m:Image>
+            </layout:HorizontalLayout>-->
+
+            <layout:VerticalLayout>
+                <m:Label text="Refer the sections below for additional details"/>
+                <m:VBox height="63px">
+                    <m:Label text="Achieved goals"/>
+                    <m:ProgressIndicator
+                            percentValue="80"
+                            displayValue="80%"
+                            showValue="true"
+                            state="None"/>
+                </m:VBox>
+            </layout:VerticalLayout>
+
+            <layout:VerticalLayout>
+                <m:Label text="SAP Labs, Bangalore"/>
+            </layout:VerticalLayout>
+        </headerContent>
+
+        <sections>
+                <ObjectPageSection title="Overview">
+                    <subSections>
+                        <ObjectPageSubSection title="Abstract">
+                            <blocks>
+                                <m:Text
+                                        maxLines="4"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"
+                                        text="This Machine learning service will validate your payroll results and highlight the discrepancies in your current payroll results based on historical data.
+                                         This service will replace the current need of extensive rule building exercise for each of the solution in each of the countries from customer implementation end to validate the payroll results.
+                                         The service thus will reduce the go live time and cost for the customer. This ML service (if acceptable accuracy is achieved) could be used by existing ECP customers and future NGP customers to validate payroll runs." />
+                            </blocks>
+                        </ObjectPageSubSection>
+                        <ObjectPageSubSection title="Business Case ">
+                            <blocks>
+                                <m:Text
+                                        maxLines="4"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"
+                                        text="Payroll Result Validation provides the service to validate the payroll results of the employee whose payroll has been executed.
+                                         The payroll results will be validated beyond simple and known validations, by using machine learning algorithms.
+                                          The algorithms that were trained on previous data will be able to identify anomalies in the payroll results are report the same for further cross validation.
+                                          This service will not only reduce the need for complex payroll result validations in payroll control centre, thus lowering the go-live effort, it will also go beyond the simple checks and detect complex anomalies that are difficult to detect. " />
+
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection title="Section 3">
+                    <subSections>
+                        <ObjectPageSubSection title="Use Case 1">
+                            <blocks>
+                                <m:Text
+                                        maxLines="4"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"
+                                        text="Vision for Solution: Based on the configuration the service will be automatically triggered once the payroll is executed and the payroll results will be validated by Machine learning Model and anomalies will be listed for further action" />
+                                <m:Text
+                                        maxLines="4"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"
+                                        text="The UI will Input the payroll results that need to be validated. The trained ML Model works on the same and reports anomalies for further action"/>
+                                <m:Text
+                                        maxLines="4"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"
+                                        text="The UI will input the relevant payroll parameters to read corresponding payroll results from the payroll system. The trained ML Model works on the payroll results and report the anomalies for further action"/>
+
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection title="Section 4">
+                    <subSections>
+                        <ObjectPageSubSection title="Use Case 2">
+                            <blocks>
+                                <m:Text
+                                        maxLines="4"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"
+                                        text="Vision for Solution: A framework will be provided to train the model with historical payroll results. The framework will also enable continuous and re-learning of the model based on the new set of data with the feasibility of versioning of the Model  " />
+                                <m:Text
+                                        maxLines="4"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"
+                                        text="The framework will enable training of the model based on historical data and report model performance based on various parameters that can help better the ML model that would be used for the Payroll result validation service"/>
+
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+
+                <ObjectPageSection title="Section 5">
+                    <subSections>
+                        <ObjectPageSubSection title="Use Case 3">
+                            <blocks>
+                                <m:Text
+                                        maxLines="4"
+                                        class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"
+                                        text="Vision for Solution: A configuration framework will be enabled to allow the feasibility of customising the service to various needs.
+                                        Sample configurations of ML Services could include:
+                                        Configuration of ML training frequency.
+                                        Configuration of date range of training data.
+                                        Configuration of ML weights (for better acceptance rate level)" />
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+        </sections>
+        <footer>
+          <!--  <m:OverflowToolbar>
+                <m:ToolbarSpacer />
+                <m:Button type="Accept" text="Accept"/>
+                <m:Button type="Reject" text="Reject"/>
+            </m:OverflowToolbar>-->
+        </footer>
+    </ObjectPageLayout>
+</core:View>

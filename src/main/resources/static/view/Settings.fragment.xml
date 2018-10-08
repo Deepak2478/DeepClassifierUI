@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleSettingsConfirm">
+		<sortItems>
+			<ViewSettingsItem text="Employee Id" key="perner" selected="true" />
+		</sortItems>
+		<filterItems>
+			<ViewSettingsFilterItem
+				text="Predictions"
+				key="classifier"
+				multiSelect="false">
+				<items>
+					<ViewSettingsItem text="Correct" key="classifier___EQ___Correct" />
+					<ViewSettingsItem text="Incorrect" key="classifier___EQ___Incorrect" />
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

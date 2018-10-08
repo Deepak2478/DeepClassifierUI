@@ -1,0 +1,138 @@
+<mvc:View controllerName="com.sapML_Analysis.controller.Model_Details" height="100%" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:vm="sap.ui.comp.variants" xmlns:viz="sap.viz.ui5.controls" xmlns:m="sap.m" xmlns:uxap="sap.uxap" xmlns:semantic="sap.m.semantic"
+	xmlns:form="sap.ui.layout.form" xmlns:viz.data="sap.viz.ui5.data">
+	<u:Shell
+			id="myShell"
+			icon="http://logok.org/wp-content/uploads/2014/10/SAP-logo-2011.png">
+		<u:headItems>
+			<u:ShellHeadItem
+					tooltip="Configuration"
+					icon="sap-icon://nav-back"
+					press="handlePressConfiguration" />
+			<u:ShellHeadItem
+					tooltip="Home"
+					icon="sap-icon://home"
+					visible="false"
+					press="handlePressHome" />
+		</u:headItems>
+		<u:headEndItems>
+			<u:ShellHeadItem
+					icon="sap-icon://log"
+					tooltip="Logoff"
+					press="handleLogoffPress" />
+		</u:headEndItems>
+		<!--<u:user>
+            <u:ShellHeadUserItem
+                    image="sap-icon://person-placeholder"
+                    username="Karl Mustermann"
+                    press="handleUserItemPressed" />
+        </u:user>
+        <u:search>
+            <SearchField
+                    search="handleSearchPressed"/>
+        </u:search>
+        <u:paneContent>
+            <Text text="Lorem ipsum" />
+        </u:paneContent>-->
+		<u:content>
+			<Text text="Lorem ipsum" />
+		</u:content>
+	</u:Shell>
+	<SplitContainer>
+		<masterPages >
+			<Page id="masterPageCase" title="Models" showNavButton="false">
+				<subHeader>
+					<Toolbar>
+						<SearchField liveChange="onSearch" width="100%" class="searchBar"></SearchField>
+					</Toolbar>
+				</subHeader>
+				<content>
+					<List id="listModel" items="{ path: 'oModelDetails>/data' }" busyIndicatorDelay="{masterView>/delay}"
+						mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true"
+						updateFinished="onUpdateFinished" selectionChange="onSelectionChange" class="group1">
+						<items>
+							<ObjectListItem title="{oModelDetails>model/name}" number="{oModelDetails>model/id}" class="objectListItem"></ObjectListItem>
+						</items>
+					</List>
+				</content>
+				<footer>
+					<Toolbar>
+						<content>
+							<ToolbarSpacer/>
+							<Button icon="sap-icon://add" press="addModel"/>
+							<Button icon="sap-icon://sort" press="sortModel"/>
+							<!--<Button icon="sap-icon://filter" press="filterModel"/>-->
+						</content>
+					</Toolbar>
+				</footer>
+			</Page>
+		</masterPages>
+		<detailPages>
+			<Page id="detailPageCase" showNavButton="false" busy="{detailView>/busy}" title="Details">
+				<content>
+					<uxap:ObjectPageLayout id="ObjectPageLayout1" enableLazyLoading="false" showHeaderContent="true">
+						<uxap:headerTitle>
+							<uxap:ObjectPageHeader objectTitle="{oModelDetails>model/name}" id="ObjectPageLayoutHeaderTitle">
+								<uxap:actions>
+									<uxap:ObjectPageHeaderActionButton text="Delete Model" hideIcon="true" hideText="false" type="Emphasized" press="deleteModel"/>
+								</uxap:actions>
+							</uxap:ObjectPageHeader>
+						</uxap:headerTitle>
+						<uxap:headerContent>
+							<l:VerticalLayout>
+								<ObjectStatus title="Created Date" text="{oModelDetails>model/whenCreated}"/>
+								<ObjectStatus title="Model Location" text="{oModelDetails>model/fileLocation}"/>
+								<ObjectStatus title="Type" text="{oModelDetails>model/type}"/>
+								<ObjectStatus title="Accuracy" text="{oModelDetails>analysis/accuracy}"/>
+							</l:VerticalLayout>
+						</uxap:headerContent>
+						<uxap:sections>
+							<uxap:ObjectPageSection title="Model Configuration">
+								<uxap:subSections>
+									<uxap:ObjectPageSubSection title="Model Configuration">
+										<uxap:blocks>
+											<VBox>
+												<u:FileUploader id="fileUploader" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server"
+													uploadComplete="handleUploadComplete"/>
+												<form:SimpleForm id="SimpleFormToolbar" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4"
+													labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1"
+													singleContainerFullSize="false">
+													<form:toolbar>
+														<Toolbar id="TB1">
+															<Title text="Configuration" level="H4" titleStyle="H4"/>
+														</Toolbar>
+													</form:toolbar>
+													<form:content>
+														<Label text="Current WT1"/>
+														<Input value="{oModelDetails>config/wt0Coeff01}"/>
+														<Label text="Current WT2"/>
+														<Input value="{oModelDetails>config/wt0Coeff02}"/>
+														<Label text="Current WT3"/>
+														<Input value="{oModelDetails>config/wt0Coeff03}"/>
+														<Label text="Current WT4"/>
+														<Input value="{oModelDetails>config/wt0Coeff04}"/>
+													</form:content>
+												</form:SimpleForm>
+
+											</VBox>
+										</uxap:blocks>
+									</uxap:ObjectPageSubSection>
+								</uxap:subSections>
+							</uxap:ObjectPageSection>
+						</uxap:sections>
+					</uxap:ObjectPageLayout>
+				</content>
+				<footer>
+					<Bar>
+						<contentRight>
+							<ToolbarSpacer/>
+							<Button type="Default" text="Upload"/>
+							<Button type="Emphasized" text="Train"/>
+						</contentRight>
+					</Bar>
+				</footer>
+			</Page>
+		</detailPages>
+	</SplitContainer>
+</mvc:View>

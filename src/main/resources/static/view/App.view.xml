@@ -1,0 +1,19 @@
+<mvc:View controllerName="com.sapML_Analysis.controller.App" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified">
+	<App id="app">
+		<pages>
+			<Page class="logonPage" showHeader="false">
+				<content>
+					<VBox fitContainer="true" justifyContent="Center" alignItems="Center" alignContent="Center">
+						<items>
+							<Input id="uid" placeholder="User" width="16rem"></Input>
+							<Input id="pasw" placeholder="Password"  width="16rem" type="Password" class= "sapUiLargeMarginBottom"></Input>
+							<Button width="16rem" text="Log On" type="Emphasized" press="onLoginTap"></Button>
+							<Button width="16rem" text="Sign UP" press="addUser"></Button>
+						</items>
+					</VBox>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

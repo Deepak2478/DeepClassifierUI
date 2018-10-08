@@ -1,0 +1,12 @@
+.vizFrame{
+	height: 10rem !important;
+}
+.app{
+	background: -webkit-linear-gradient(270deg, rgb(45, 171, 179), rgb(23, 130, 153), rgb(26, 77, 128)) !important;
+}
+.logonPage{
+	background-image: url(https://blogs.sap.com/wp-content/uploads/2016/01/login_background_ie8_862560.jpg);
+}
+.classTitlePage{
+	min-height: 0rem !important;
+}

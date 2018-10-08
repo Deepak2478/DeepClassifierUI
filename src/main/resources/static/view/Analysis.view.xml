@@ -1,0 +1,198 @@
+<mvc:View controllerName="com.sapML_Analysis.controller.Analysis" height="100%" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:vm="sap.ui.comp.variants" xmlns:viz="sap.viz.ui5.controls" xmlns:cm="sap.suite.ui.microchart"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:form="sap.ui.layout.form" xmlns:viz.data="sap.viz.ui5.data">
+	<u:Shell
+			id="myShell"
+			icon="http://logok.org/wp-content/uploads/2014/10/SAP-logo-2011.png">
+		<u:headItems>
+			<u:ShellHeadItem
+					tooltip="Configuration"
+					icon="sap-icon://nav-back"
+					press="handlePressConfiguration" />
+			<u:ShellHeadItem
+					tooltip="Home"
+					icon="sap-icon://home"
+					visible="false"
+					press="handlePressHome" />
+		</u:headItems>
+		<u:headEndItems>
+			<u:ShellHeadItem
+					icon="sap-icon://log"
+					tooltip="Logoff"
+					press="handleLogoffPress" />
+		</u:headEndItems>
+		<!--<u:user>
+            <u:ShellHeadUserItem
+                    image="sap-icon://person-placeholder"
+                    username="Karl Mustermann"
+                    press="handleUserItemPressed" />
+        </u:user>
+        <u:search>
+            <SearchField
+                    search="handleSearchPressed"/>
+        </u:search>
+        <u:paneContent>
+            <Text text="Lorem ipsum" />
+        </u:paneContent>-->
+		<u:content>
+			<Text text="Lorem ipsum" />
+		</u:content>
+	</u:Shell>
+	<Page title="Payroll Results- Tax">
+		<f:DynamicPage id="dynamicPageId" headerExpanded="{/headerExpanded}">
+			<!-- DynamicPage Title -->
+			<f:title>
+				<f:DynamicPageTitle class="classTitlePage" primaryArea="Middle">
+					<!--	<f:actions>
+						<u:FileUploader name="uploadCsv" multiple="false" change="onCsvUpload" uploadStart="csvUploadStart" uploadComplete="csvUploadUpdated"
+							buttonText="Upload" buttonOnly="true" style="Emphasized"/>
+						<Button text="Analyze" type="Transparent"/>
+					</f:actions>-->
+				</f:DynamicPageTitle>
+			</f:title>
+			<!-- DynamicPage Header -->
+			<f:header>
+				<f:DynamicPageHeader pinnable="true">
+
+					<f:content>
+						<form:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4"
+							labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1"
+							singleContainerFullSize="false">
+							<form:content>
+								<Label text="Select File"/>
+								<u:FileUploader width ="100%" id="fileUploader" name="uploadCsv" multiple="false" change="onCsvUpload" uploadStart="handleUploadPress" uploadComplete="csvUploadUpdated"
+								buttonText="Browse.." style="Emphasized" typeMissmatch="handleTypeMissmatch" fileType="csv"/>
+							<!--	<u:FileUploader width ="100%" name="uploadCsv" multiple="false" change="onCsvUpload"
+								uploadStart="csvUploadStart" uploadComplete="csvUploadUpdated" buttonText="Upload" style="Emphasized"/>-->
+								<Label text="Select Model"/>
+								<Select id="idModelList" forceSelection="false" items="{ path: 'oModelDetails>/'}" change="setAccuracy">
+									<core:Item key="{oModelDetails>model/id}" text="{oModelDetails>model/name}"/>
+								</Select>
+								<Label text="Accuracy"/>
+								<ProgressIndicator id="idAccuracy" class="sapUiSmallMarginBottom" showValue="true"/>
+								<Label text=""/>
+								<Button text="Analyze" press="analyzePress">
+									<!--<layoutData>
+										<layout:GridData span="XL2 L1 M3 S4"/>
+									</layoutData>-->
+								</Button>
+							</form:content>
+						</form:SimpleForm>
+					</f:content>
+				</f:DynamicPageHeader>
+			</f:header>
+			<!-- DynamicPage Content -->
+			<f:content>
+				<VBox class="sapUiLargeMarginBottom">
+					<HBox fitContainer="true" class="sapUiLargeMarginEnd sapUiLargeMarginBottom" height="10rem">
+						<viz:VizFrame class="vizFrame sapUiMediumMarginEnd" id="DueDateGridFrame" vizType="info/pie"
+							vizProperties="{title: { visible: false }, plotArea:{dataLabel:{visible: true}}}">
+							<viz:dataset>
+								<viz.data:FlattenedDataset data="{dataModel>/displayData}">
+									<viz.data:dimensions>
+										<viz.data:DimensionDefinition name="Payroll Classifier" value="{dataModel>Payroll Classifier}" displayValue="{data>Payroll Classifier}"/>
+									</viz.data:dimensions>
+									<viz.data:measures>
+										<viz.data:MeasureDefinition value="{dataModel>Count}" name="Count"/>
+									</viz.data:measures>
+								</viz.data:FlattenedDataset>
+							</viz:dataset>
+							<viz:feeds>
+								<viz.feeds:FeedItem uid="size" type="Measure" values="Count"/>
+								<viz.feeds:FeedItem uid="color" type="Dimension" values="Payroll Classifier"/>
+							</viz:feeds>
+						</viz:VizFrame>
+						<viz:Popover id="vizPopover"></viz:Popover>
+                        <FlexBox width="20rem" height="10rem" alignItems="Center" class="sapUiSmallMargin">
+                            <items>
+                                <cm:InteractiveBarChart labelWidth="25%" selectionChanged="selectionChanged" press="press">
+                                    <cm:bars>
+                                        <cm:InteractiveBarChartBar label="Records Processed" value="{dataModel>/totalProcessed}"/>
+                                        <cm:InteractiveBarChartBar label="Correct Records" value="{dataModel>/correctCount}"/>
+                                        <cm:InteractiveBarChartBar label="Incorrect Records" value="{dataModel>/incorrectCount}"/>
+                                    </cm:bars>
+                                </cm:InteractiveBarChart>
+                            </items>
+                        </FlexBox>
+					<!--	<VBox class="sapUiLargeMarginBegin">
+							<HBox>
+								<Label text="Records processed :" class="sapUiLargeMarginEnd"/>
+								<Text text="{dataModel>/totalProcessed}"/>
+							</HBox>
+							<HBox>
+								<Label text="Correct records :" class="sapUiLargeMarginEnd"/>
+								<Text text="{dataModel>/correctCount}"/>
+							</HBox>
+							<HBox>
+								<Label text="Incorrect records :" class="sapUiLargeMarginEnd"/>
+								<Text text="{dataModel>/incorrectCount}"/>
+							</HBox>
+						</VBox> -->
+						<!--<viz:VizFrame class="vizFrame sapUiMediumMarginBegin" id="idChartParkRight" uiConfig="{applicationSet:'fiori'}" vizType="line"
+							vizProperties="{ title: { visible: false }, valueAxis: { title: { visible: false } }, categoryAxis: { title: { visible: false } }, plotArea: { colorPalette: ['#e17b24', '#d1d6e0', '#61a656','#848f94' ], gap: { visible: false }, isFixedDataPointSize: false, window: { start: null, end: null }, timeAxis: { interval: { unit: 'auto' } } } }">
+							<viz:dataset>
+								<viz.data:FlattenedDataset data="{data>/lineData}">
+									<viz.data:dimensions>
+										<viz.data:DimensionDefinition name="Week" value="{data>Week}"/>
+									</viz.data:dimensions>
+									<viz.data:measures>
+										<viz.data:MeasureDefinition name="Revenue" value="{data>Revenue}"/>
+										<viz.data:MeasureDefinition name="Cost" value="{data>Cost}"/>
+									</viz.data:measures>
+								</viz.data:FlattenedDataset>
+							</viz:dataset>
+							<viz:feeds>
+								<viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Revenue"/>
+								<viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Week"/>
+							</viz:feeds>
+						</viz:VizFrame>
+						<viz:Popover id="vizPopover1"></viz:Popover>-->
+					</HBox>
+					<Table id="idRecordTable" inset="false" items="{ path: 'dataModel>/predictions' }">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Predictions" level="H2"/>
+								<ToolbarSpacer></ToolbarSpacer>
+								<Button icon="sap-icon://download" press="onDataExport"/>
+								<Button icon="sap-icon://settings" press="handleViewSettingsDialogButtonPressed"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="Employee Id"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="Pay Period"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="Predictions"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="Message"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle">
+								<cells>
+									<ObjectIdentifier text="{dataModel>perner}"/>
+									<Text text="{dataModel>payPeriod}"/>
+									<Text text="{dataModel>classifier}"/>
+									<Text text="{dataModel>message}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</VBox>
+			</f:content>
+			<!-- DynamicPage Footer -->
+			<f:footer>
+				<OverflowToolbar>
+					<ToolbarSpacer/>
+					<Button type="Accept" text="Accept"/>
+					<Button type="Reject" text="Reject"/>
+				</OverflowToolbar>
+			</f:footer>
+		</f:DynamicPage>
+	</Page>
+</mvc:View>
